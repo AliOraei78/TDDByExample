@@ -83,3 +83,16 @@ This project is well-suited for showcasing on **LinkedIn** and **GitHub** to att
 - Ensured full adherence to Self-Validating and Independent test principles
 
 **Current Test Status:** High-quality, readable, and production-grade test suite
+
+### Day 6: Repository Pattern with TDD (Interface + InMemory Repository)
+
+**Completed Tasks:**
+
+- Fully implemented `ITransactionRepository`
+- Created `InMemoryTransactionRepository` for unit testing purposes
+- Wrote repository tests using a TDD approach
+- Added core methods (Add, GetAll, GetById, Clear)
+- Improved testability of the data access layer
+- Fully decoupled the Domain layer from storage implementation details
+
+**Status:** Repository layer is ready for use in services
