@@ -45,16 +45,15 @@ This project is well-suited for showcasing on **LinkedIn** and **GitHub** to att
 - Created the initial README.md file
 - Prepared the solution for successful compilation and test execution
 
-**Current Status:** The development environment is fully configured and ready. All tests can be executed successfully.
+### Day 2: Red-Green-Refactor Cycle + First TDD Implementation
 
-## Running the Project and Tests
+**Completed Tasks:**
 
-```bash
-# Restore packages
-dotnet restore
+- Implemented `TransactionValidator` following the complete TDD workflow
+- Wrote multiple unit tests using both `Fact` and `Theory`
+- Used FluentAssertions for more readable and expressive assertions
+- Created the base `Transaction` entity
+- Gained practical experience with the Red → Green → Refactor cycle
+- Added test coverage for positive, negative, and zero-value scenarios
 
-# Build the solution
-dotnet build
-
-# Run all tests
-dotnet test
+**Test Coverage Status:** 100% coverage for `TransactionValidator`

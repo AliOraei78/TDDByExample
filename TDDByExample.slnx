@@ -1,1 +1,8 @@
-<Solution />
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="TDDByExample.Api/TDDByExample.Api.csproj" />
+  <Project Path="TDDByExample.Domain/TDDByExample.Domain.csproj" />
+  <Project Path="TDDByExample.Tests/TDDByExample.Tests.csproj" />
+</Solution>
