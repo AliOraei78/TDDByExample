@@ -57,3 +57,16 @@ This project is well-suited for showcasing on **LinkedIn** and **GitHub** to att
 - Added test coverage for positive, negative, and zero-value scenarios
 
 **Test Coverage Status:** 100% coverage for `TransactionValidator`
+
+### Day 3: Testing Conditional Logic, Exceptions, and Edge Cases
+
+**Completed Tasks:**
+
+- Extended `TransactionValidator` with real-world constraints
+- Implemented boundary testing (upper and lower limits)
+- Added exception-based tests using `Should().Throw<>`
+- Used `[Theory]` and `[InlineData]` to validate multiple input scenarios
+- Improved the `Transaction` entity with initial validation rules
+- Achieved strong test coverage for both valid and invalid scenarios
+
+**Test Coverage Status:** Very high coverage for transaction validation logic

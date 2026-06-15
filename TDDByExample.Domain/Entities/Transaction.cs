@@ -10,8 +10,12 @@ public class Transaction
     public Transaction(decimal amount, string description)
     {
         Id = Guid.NewGuid();
-        Amount = amount;
         Date = DateTime.UtcNow;
+
+        if (string.IsNullOrWhiteSpace(description))
+            throw new ArgumentException("Description cannot be empty", nameof(description));
+
+        Amount = amount;
         Description = description;
     }
 }
