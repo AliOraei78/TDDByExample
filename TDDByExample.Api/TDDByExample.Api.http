@@ -1,0 +1,6 @@
+@TDDByExample.Api_HostAddress = http://localhost:5201
+
+GET {{TDDByExample.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
