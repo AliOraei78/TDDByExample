@@ -70,3 +70,16 @@ This project is well-suited for showcasing on **LinkedIn** and **GitHub** to att
 - Achieved strong test coverage for both valid and invalid scenarios
 
 **Test Coverage Status:** Very high coverage for transaction validation logic
+
+### Day 4: FIRST Principles + Test Naming Conventions
+
+**Completed Tasks:**
+
+- Introduced and applied the FIRST principles for writing professional tests
+- Fully refactored `TransactionValidatorTests`
+- Implemented standard Naming Convention (Given-Should pattern)
+- Used constructor-based test setup to reduce code duplication
+- Improved readability, maintainability, and execution clarity of tests
+- Ensured full adherence to Self-Validating and Independent test principles
+
+**Current Test Status:** High-quality, readable, and production-grade test suite
