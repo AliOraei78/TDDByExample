@@ -96,3 +96,16 @@ This project is well-suited for showcasing on **LinkedIn** and **GitHub** to att
 - Fully decoupled the Domain layer from storage implementation details
 
 **Status:** Repository layer is ready for use in services
+
+### Day 7: Service Layer Pattern with TDD (Business Logic + Validation)
+
+**Completed Tasks:**
+
+- Extended the entity model with `TransactionType` (Deposit/Withdrawal)
+- Enhanced business rules within the Validator and Service layers
+- Implemented `AddTransaction`, `GetBalance`, and `GetAllTransactions` methods
+- Wrote comprehensive business logic tests using mocking techniques
+- Added exception handling for business rule violations
+- Strengthened the Service layer as the core of the application's business logic
+
+**Status:** Service layer is ready for integration with the API layer

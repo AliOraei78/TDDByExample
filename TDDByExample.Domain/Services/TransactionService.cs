@@ -14,10 +14,33 @@ public class TransactionService
         _repository = repository;
     }
 
-    public void AddTransaction(decimal amount, string description)
+    public void AddTransaction(decimal amount, string description, TransactionType type = TransactionType.Deposit)
     {
-        var transaction = new Transaction(amount, description);
+        _validator.ValidateAmountForTransaction(amount, type);
+
+        var transaction = new Transaction(amount, description, type);
         _validator.ValidateTransaction(transaction);
         _repository.Add(transaction);
+    }
+
+    public decimal GetBalance()
+    {
+        var transactions = _repository.GetAll();
+        decimal balance = 0;
+
+        foreach (var t in transactions)
+        {
+            if (t.Type == TransactionType.Deposit)
+                balance += t.Amount;
+            else
+                balance -= t.Amount;
+        }
+
+        return balance;
+    }
+
+    public List<Transaction> GetAllTransactions()
+    {
+        return _repository.GetAll();
     }
 }

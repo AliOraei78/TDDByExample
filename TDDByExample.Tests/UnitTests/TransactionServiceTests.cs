@@ -2,6 +2,7 @@
 using Moq;
 using TDDByExample.Domain.Entities;
 using TDDByExample.Domain.Interfaces;
+using TDDByExample.Domain.Repositories;
 using TDDByExample.Domain.Services;
 using Xunit;
 
@@ -21,29 +22,50 @@ public class TransactionServiceTests
     }
 
     [Fact]
-    public void AddTransaction_GivenValidData_ShouldCallRepositoryAdd()
+    public void AddTransaction_GivenValidDeposit_ShouldCallRepositoryAndValidate()
     {
-        // Arrange
         decimal amount = 50000;
-        string description = "Monthly salary";
+        string desc = "Salary deposit";
 
-        // Act
-        _service.AddTransaction(amount, description);
+        _service.AddTransaction(amount, desc, TransactionType.Deposit);
 
-        // Assert
         _repositoryMock.Verify(r => r.Add(It.IsAny<Transaction>()), Times.Once());
     }
 
     [Fact]
-    public void AddTransaction_GivenInvalidAmount_ShouldThrowArgumentException()
+    public void AddTransaction_GivenAmountBelowMinimum_ShouldThrowException()
     {
-        // Arrange
-        decimal amount = -1000;
-        string description = "Invalid transaction";
+        Action act = () => _service.AddTransaction(500, "Below minimum amount");
 
-        // Act & Assert
-        Action act = () => _service.AddTransaction(amount, description);
+        act.Should().Throw<ArgumentException>()
+           .WithMessage("*Minimum transaction amount is 1000*");
+    }
 
-        act.Should().Throw<ArgumentException>();
+    [Fact]
+    public void GetBalance_GivenMixedTransactions_ShouldCalculateCorrectly()
+    {
+        var repo = new InMemoryTransactionRepository();
+        var service = new TransactionService(_validator, repo);
+
+        service.AddTransaction(100000, "Deposit", TransactionType.Deposit);
+        service.AddTransaction(30000, "Withdrawal", TransactionType.Withdrawal);
+
+        decimal balance = service.GetBalance();
+
+        balance.Should().Be(70000);
+    }
+
+    [Fact]
+    public void GetAllTransactions_ShouldReturnAllStoredTransactions()
+    {
+        var repo = new InMemoryTransactionRepository();
+        var service = new TransactionService(_validator, repo);
+
+        service.AddTransaction(50000, "Test 1");
+        service.AddTransaction(20000, "Test 2", TransactionType.Withdrawal);
+
+        var result = service.GetAllTransactions();
+
+        result.Should().HaveCount(2);
     }
 }

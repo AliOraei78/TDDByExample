@@ -22,4 +22,16 @@ public class TransactionValidator
         if (string.IsNullOrWhiteSpace(transaction.Description))
             throw new ArgumentException("Description cannot be empty", nameof(transaction.Description));
     }
+
+    public void ValidateAmountForTransaction(decimal amount, TransactionType type)
+    {
+        if (amount <= 1000)
+            throw new ArgumentException("Minimum transaction amount is 1000", nameof(amount));
+
+        if (type == TransactionType.Withdrawal && amount <= 0)
+            throw new ArgumentException("Withdrawal amount must be positive", nameof(amount));
+
+        if (!ValidateAmount(amount))
+            throw new ArgumentException("Amount must be between 0.01 and 100,000,000", nameof(amount));
+    }
 }
