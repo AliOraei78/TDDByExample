@@ -135,3 +135,16 @@ This project is well-suited for showcasing on **LinkedIn** and **GitHub** to att
 - Enhanced code readability and maintainability
 
 **Status:** Cleaner and more professional architecture achieved
+
+### Day 10: Basic Integration Testing + InMemory Database Testing
+
+**Completed Tasks:**
+
+- Created `AppDbContext` using EF Core InMemory provider
+- Implemented `EfTransactionRepository`
+- Wrote integration tests for Service + Repository interaction
+- Tested real scenarios without mocking (data persistence and retrieval)
+- Separated Integration Tests from Unit Tests
+- Used InMemory Database for fast and isolated test execution
+
+**Status:** Strong combined test coverage (Unit + Integration)
