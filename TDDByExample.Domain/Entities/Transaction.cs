@@ -13,6 +13,9 @@ public class Transaction
         if (string.IsNullOrWhiteSpace(description))
             throw new ArgumentException("Description cannot be empty", nameof(description));
 
+        if (amount <= 0)
+            throw new ArgumentException("Amount must be positive", nameof(amount));
+
         Id = Guid.NewGuid();
         Amount = amount;
         Date = DateTime.UtcNow;

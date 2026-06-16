@@ -5,10 +5,11 @@ namespace TDDByExample.Domain.Services;
 public class TransactionValidator
 {
     private const decimal MaxAmount = 100_000_000m;
+    private const decimal MinAmount = 1000m;
 
     public bool ValidateAmount(decimal amount)
     {
-        return amount > 0 && amount <= MaxAmount;
+        return amount >= MinAmount && amount <= MaxAmount;
     }
 
     public void ValidateTransaction(Transaction transaction)
@@ -17,21 +18,21 @@ public class TransactionValidator
             throw new ArgumentNullException(nameof(transaction));
 
         if (!ValidateAmount(transaction.Amount))
-            throw new ArgumentException("Amount must be between 0.01 and 100,000,000", nameof(transaction.Amount));
+            throw new ArgumentException($"Amount must be between {MinAmount} and {MaxAmount}", nameof(transaction.Amount));
 
         if (string.IsNullOrWhiteSpace(transaction.Description))
             throw new ArgumentException("Description cannot be empty", nameof(transaction.Description));
     }
 
-    public void ValidateAmountForTransaction(decimal amount, TransactionType type)
+    public void ValidateAddTransaction(decimal amount, string description, TransactionType type)
     {
-        if (amount <= 1000)
-            throw new ArgumentException("Minimum transaction amount is 1000", nameof(amount));
+        if (amount < MinAmount)
+            throw new ArgumentException($"Minimum transaction amount is {MinAmount}", nameof(amount));
 
-        if (type == TransactionType.Withdrawal && amount <= 0)
-            throw new ArgumentException("Withdrawal amount must be positive", nameof(amount));
+        if (amount > MaxAmount)
+            throw new ArgumentException($"Maximum transaction amount is {MaxAmount}", nameof(amount));
 
-        if (!ValidateAmount(amount))
-            throw new ArgumentException("Amount must be between 0.01 and 100,000,000", nameof(amount));
+        if (string.IsNullOrWhiteSpace(description))
+            throw new ArgumentException("Description cannot be empty", nameof(description));
     }
 }

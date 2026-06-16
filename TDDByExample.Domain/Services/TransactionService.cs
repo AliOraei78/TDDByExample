@@ -16,31 +16,17 @@ public class TransactionService
 
     public void AddTransaction(decimal amount, string description, TransactionType type = TransactionType.Deposit)
     {
-        _validator.ValidateAmountForTransaction(amount, type);
+        _validator.ValidateAddTransaction(amount, description, type);
 
         var transaction = new Transaction(amount, description, type);
-        _validator.ValidateTransaction(transaction);
         _repository.Add(transaction);
     }
 
     public decimal GetBalance()
     {
         var transactions = _repository.GetAll();
-        decimal balance = 0;
-
-        foreach (var t in transactions)
-        {
-            if (t.Type == TransactionType.Deposit)
-                balance += t.Amount;
-            else
-                balance -= t.Amount;
-        }
-
-        return balance;
+        return transactions.Sum(t => t.Type == TransactionType.Deposit ? t.Amount : -t.Amount);
     }
 
-    public List<Transaction> GetAllTransactions()
-    {
-        return _repository.GetAll();
-    }
+    public List<Transaction> GetAllTransactions() => _repository.GetAll();
 }

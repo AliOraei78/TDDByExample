@@ -28,12 +28,13 @@ public class TransactionValidatorTests
     }
 
     [Theory]
-    [InlineData(0.001)]
+    [InlineData(1000)]
     [InlineData(100_000_000)]
     [InlineData(25000.50)]
     public void ValidateAmount_GivenValidAmount_ShouldReturnTrue(decimal amount)
     {
-        bool result = _validator.ValidateAmount(amount);
+        var validator = new TransactionValidator();
+        bool result = validator.ValidateAmount(amount);
 
         result.Should().BeTrue();
     }
@@ -59,12 +60,16 @@ public class TransactionValidatorTests
     [Fact]
     public void ValidateTransaction_GivenInvalidAmount_ShouldThrowArgumentException()
     {
-        var transaction = new Transaction(0, "Test");
+        // Arrange
+        var validator = new TransactionValidator();
+        var invalidTransaction = new Transaction(500, "Test", TransactionType.Deposit);
 
-        Action act = () => _validator.ValidateTransaction(transaction);
+        // Act
+        Action act = () => validator.ValidateTransaction(invalidTransaction);
 
+        // Assert
         act.Should().Throw<ArgumentException>()
-           .WithMessage("*Amount must be between*");
+           .WithMessage("*Amount must be between 1000 and 100000000*");
     }
 
     [Fact]

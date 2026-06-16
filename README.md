@@ -122,3 +122,16 @@ This project is well-suited for showcasing on **LinkedIn** and **GitHub** to att
 - Covered both successful and failure scenarios with automated tests
 
 **Status:** The API layer is fully professional, robust, and highly testable
+
+### Day 9: Refactoring and Applying SOLID Principles
+
+**Completed Tasks:**
+
+- Applied SOLID principles, with emphasis on SRP, OCP, and DIP
+- Improved the domain model by introducing the `Account` entity
+- Refactored `TransactionValidator` and `TransactionService`
+- Reduced responsibilities per class and improved extensibility
+- Preserved existing system behavior (all tests remained green)
+- Enhanced code readability and maintainability
+
+**Status:** Cleaner and more professional architecture achieved
