@@ -1,23 +1,60 @@
+using TDDByExample.Domain.Entities;
+using TDDByExample.Domain.Interfaces;
+using TDDByExample.Domain.Repositories;
+using TDDByExample.Domain.Services;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+// Services
+builder.Services.AddScoped<TransactionValidator>();
+builder.Services.AddScoped<ITransactionRepository, InMemoryTransactionRepository>();
+builder.Services.AddScoped<TransactionService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Global Exception Handler
+app.UseExceptionHandler(exceptionHandlerApp =>
 {
-    app.MapOpenApi();
-}
+    exceptionHandlerApp.Run(async context =>
+    {
+        context.Response.StatusCode = StatusCodes.Status400BadRequest;
+        context.Response.ContentType = "application/json";
 
-app.UseHttpsRedirection();
+        var exception = context.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature>()?.Error;
 
-app.UseAuthorization();
+        if (exception is ArgumentException)
+        {
+            await context.Response.WriteAsJsonAsync(new
+            {
+                Error = exception.Message
+            });
+        }
+        else
+        {
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            await context.Response.WriteAsJsonAsync(new { Error = "An unexpected error occurred." });
+        }
+    });
+});
 
-app.MapControllers();
+// Endpoints
+app.MapGet("/transactions", (TransactionService service) =>
+    Results.Ok(service.GetAllTransactions()));
+
+app.MapPost("/transactions", (AddTransactionRequest request, TransactionService service) =>
+{
+    service.AddTransaction(request.Amount, request.Description, request.Type);
+    return Results.Created("/transactions", new { Message = "Transaction added successfully" });
+});
+
+app.MapGet("/balance", (TransactionService service) =>
+{
+    var balance = service.GetBalance();
+    return Results.Ok(new { Balance = balance });
+});
 
 app.Run();
+
+public partial class Program { }

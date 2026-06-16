@@ -109,3 +109,16 @@ This project is well-suited for showcasing on **LinkedIn** and **GitHub** to att
 - Strengthened the Service layer as the core of the application's business logic
 
 **Status:** Service layer is ready for integration with the API layer
+
+### Day 8: ASP.NET Core Web API + Testing with TDD
+
+**Completed Tasks:**
+
+- Implemented a Minimal API using DTOs
+- Configured full Dependency Injection
+- Added a Global Exception Handler to convert `ArgumentException` into HTTP 400 responses
+- Created comprehensive API tests using `WebApplicationFactory`
+- Resolved Model Binding and Exception Handling issues
+- Covered both successful and failure scenarios with automated tests
+
+**Status:** The API layer is fully professional, robust, and highly testable
